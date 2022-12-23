@@ -1,6 +1,6 @@
 # need to refactor this
 
-input = open("day8_input.txt", "r").read().splitlines()       #note there is no splitlines() here
+input = open("day8_input.txt", "r").read().splitlines()
 #input = open("day8_sample_input.txt", "r").read().splitlines()
 
 # size of position matrix assuming it is square
