@@ -1,6 +1,6 @@
 import numpy
-input = open("day9_input.txt", "r").read().splitlines()
-#input = open("day9_sample_input.txt", "r").read().splitlines()
+input = open("input\day9_input.txt", "r").read().splitlines()
+#input = open("input\day9_sample_input.txt", "r").read().splitlines()
 
 # head x and y positions and tail x and y positions
 xh, yh, xt, yt = 0, 0, 0, 0

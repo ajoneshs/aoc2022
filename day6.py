@@ -1,4 +1,4 @@
-input = open("day6_input.txt", "r").read()
+input = open("input\day6_input.txt", "r").read()
 
 def packet_marker_index(num_chars, message):
     substring = message[:num_chars]

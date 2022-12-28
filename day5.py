@@ -1,6 +1,6 @@
 import re
 
-input = open("day5_input.txt", "r").read()
+input = open("input\day5_input.txt", "r").read()
 
 initial_crate_layout = [[] for i in range(9)]
 

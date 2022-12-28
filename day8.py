@@ -1,7 +1,7 @@
 # need to refactor this
 
-input = open("day8_input.txt", "r").read().splitlines()
-#input = open("day8_sample_input.txt", "r").read().splitlines()
+input = open("input\day8_input.txt", "r").read().splitlines()
+#input = open("input\day8_sample_input.txt", "r").read().splitlines()
 
 # size of position matrix assuming it is square
 n = len(input[0])
@@ -95,3 +95,6 @@ print(visible_counter)
 
 # answer to part 2 (highest possible scenic score)
 print(max_ss)
+
+
+print(type(scenic_scores[1]))

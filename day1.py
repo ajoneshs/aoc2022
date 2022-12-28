@@ -1,4 +1,4 @@
-input = open("day1_input.txt", "r").read()
+input = open("input\\day1_input.txt", "r").read()
 
 # a list of the total calories each elf carries
 calorie_inventory = [sum([int(j) for j in i.split('\n')]) for i in input.split("\n\n")] 

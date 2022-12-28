@@ -2,7 +2,7 @@ import re
 import time
 t1 = time.time()
 
-input = open("day4_input.txt", "r").read()
+input = open("input\day4_input.txt", "r").read()
 
 # current plan: break up input into list where each element is a line in input
 # then split by the comma 

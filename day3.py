@@ -1,4 +1,4 @@
-input = open("day3_input.txt", "r").read()
+input = open("input\day3_input.txt", "r").read()
 
 # a list where each element consists of the contents of one haversack
 input_list = input.split()
