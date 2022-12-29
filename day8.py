@@ -73,15 +73,12 @@ for row in input:
     x = 0
     y += 1
 
-
-
 visible_counter = 0
 # finds the number of visible trees in output variable
 for row in output:
     for i in row:
         if i == 'v':
             visible_counter += 1
-
 
 max_ss = 0
 # finds highest scenic score from list (is it a list?????????????)
@@ -91,10 +88,7 @@ for row in scenic_scores:
             max_ss = int(i)
 
 # answer to part 1 (total number of visible trees)
-print(visible_counter)
+print('Part 1: ' + str(visible_counter))
 
 # answer to part 2 (highest possible scenic score)
-print(max_ss)
-
-
-print(type(scenic_scores[1]))
+print('Part 2: ' + str(max_ss))
