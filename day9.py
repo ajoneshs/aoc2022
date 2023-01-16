@@ -1,7 +1,7 @@
 import numpy
 
-input = open("input\day9_input.txt", "r").read().splitlines()
-#input = open("input\day9_sample_input.txt", "r").read().splitlines()
+input = open("input\day09_input.txt", "r").read().splitlines()
+#input = open("input\day09_sample_input.txt", "r").read().splitlines()
 
 # used to convert direction into numerical values
 dir_dict = {'L': -1, 'R': 1, 'U': 1, 'D': -1}

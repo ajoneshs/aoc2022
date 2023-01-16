@@ -1,7 +1,7 @@
 # need to refactor this
 
-input = open("input\day8_input.txt", "r").read().splitlines()
-#input = open("input\day8_sample_input.txt", "r").read().splitlines()
+input = open("input\day08_input.txt", "r").read().splitlines()
+#input = open("input\day08_sample_input.txt", "r").read().splitlines()
 
 # size of position matrix assuming it is square
 n = len(input[0])

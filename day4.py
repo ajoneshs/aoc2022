@@ -1,6 +1,6 @@
 import re
 
-input = open("input\day4_input.txt", "r").read()
+input = open("input\day04_input.txt", "r").read()
 input_list = input.split()
 
 # initializes variables used in for loop below
