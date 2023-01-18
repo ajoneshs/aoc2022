@@ -3,38 +3,86 @@
 # moves each input file to the input folder, and updates each file to refer
 # to the new location for the input files
 
-import os, shutil, re
+import os
+import re
+import git
 
-os.chdir('C:\eng\\aoc2022')
-input_dir = 'C:\eng\\aoc2022\\input'
-
-# moves input files from from the parent folder to the input folder
-for file_name in os.listdir():
-    if '_input.txt' in file_name:
-        shutil.move(file_name, input_dir)
-        print("successfully moved " + file_name + " to input folder")
+solutions_dir = 'C:\eng\\aoc2022'
+input_dir = 'C:\eng\\aoc2022\input'
+repo = git.Repo(solutions_dir)
 
 
-# takes file as input, searches for text of format dayn_input.txt or 
-# dayn_sample_input.txt, and adds input\\ before any matches, then writes
-# the file
-def file_editor(input_file):
-    with open(input_file, 'r') as f:
-        file_contents = f.read().splitlines()
+# changes file name from dayn... to day0n... where n is a single digit
+# double digit days are left alone
+def name_changer(dir):
+    intermediate_list = []
+    intermediate_list_changed = []
+    os.chdir(dir)
+    for file in os.listdir():
+        match = re.findall(r'\d+', file)
+        if match and len(match[0]) == 1:
+            new_name = file[0:3] + str(0) + file[3:]
+            os.rename(file, new_name)
+            intermediate_list.append(file)
+            intermediate_list_changed.append(new_name)
+            print(f"{file} was renamed to {new_name}")
+    return intermediate_list, intermediate_list_changed
 
-    for counter, line in enumerate(file_contents):
-        match = re.findall(r'day\d+_(?:input|sample_input).txt', line)
-        if match:
-            for match_counter, instance in enumerate(match):
-                line = line.replace(instance, 'input\\' + match[match_counter], 1)
-            file_contents[counter] = line
 
-    with open(input_file, 'w') as f:
-        f.write('\n'.join(file_contents))
+def commit_name_change(option, old_names, new_names):
+    prefix = ''
+    if option == 'input':
+        prefix = 'input/'
+    for counter, new_name in enumerate(new_names):
+        repo.git.add(prefix + new_name)
+        repo.git.rm(prefix + old_names[counter])
+        print(f"{old_names[counter]} was renamed to {new_name}")
+    message = f"Rename single digit {option} file names"
+    repo.git.commit('-m', message)
+    print(f"Committed with message: {message}")
 
 
-# runs file_editor on all aoc day files
-for file_name in os.listdir():
-    if '.py' in file_name and 'input_folder_script' not in file_name:
-        file_editor(file_name)
-        print(file_name + " was edited")
+# takes directory as input, looks inside files, finds all instances
+# where there is a single digit day number, and adds a 0 in front
+# i.e. day1 -> day01
+def file_editor(dir):
+    os.chdir(solutions_dir)
+    edited_files = []
+    # just means for all items in dir that are not folders
+    for file in [file for file in os.listdir() if os.path.isfile(os.path.join(dir, file))]:
+        match = re.findall(r'\d+', file)
+        if match and len(match[0]) == 1:
+            edited_files.append(file)
+            with open(file, 'r') as f:
+                file_contents = f.read().splitlines()
+
+            for counter, line in enumerate(file_contents):
+                match = re.findall(r'input\\day\d+_(?:input|sample_input).txt', line)
+                if match:
+                    submatch = re.findall(r'\d+', match[0])
+                    line = line.replace(submatch[0], ("0" + submatch[0]))
+                    file_contents[counter] = line
+                    print(f"{file} line #{counter} was edited to say {line}")
+
+            with open(file, 'w') as f:
+                f.write('\n'.join(file_contents))
+    return edited_files
+
+
+def commit_file_edits(edited_files):
+    for file in edited_files:
+        repo.git.add(file)
+    message = "Edit files to reflect changed input names"
+    repo.git.commit('-m', message)
+    print(f"Committed with message: {message}")
+
+
+edited_files = file_editor(solutions_dir)
+commit_file_edits(edited_files)
+
+solutions_old_names, solutions_new_names = name_changer(solutions_dir)
+inputs_old_names, inputs_new_names = name_changer(input_dir)
+commit_name_change('solution', solutions_old_names, solutions_new_names)
+commit_name_change('input', inputs_old_names, inputs_new_names)
+
+repo.git.push()
