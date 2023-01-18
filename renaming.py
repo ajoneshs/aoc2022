@@ -1,7 +1,7 @@
-# Part of the way through Advent of Code I decided I wanted to clean up my
-# project folder by creating a subfolder for all the input files. This script
-# moves each input file to the input folder, and updates each file to refer
-# to the new location for the input files
+# After reaching double-digit day numbers, I decided I wanted my single-digit 
+# file names to be numbered day0n so everything would be arranged in 
+# chronological order when sorted alphabetically. This script renames files, 
+# edits code to point to the new files names, and commits/pushes these changes
 
 import os
 import re
@@ -13,7 +13,7 @@ repo = git.Repo(solutions_dir)
 
 
 # changes file name from dayn... to day0n... where n is a single digit
-# double digit days are left alone
+# double-digit days are left alone
 def name_changer(dir):
     intermediate_list = []
     intermediate_list_changed = []
@@ -43,7 +43,7 @@ def commit_name_change(option, old_names, new_names):
 
 
 # takes directory as input, looks inside files, finds all instances
-# where there is a single digit day number, and adds a 0 in front
+# where there is a single-digit day number, and adds a 0 in front
 # i.e. day1 -> day01
 def file_editor(dir):
     os.chdir(solutions_dir)
