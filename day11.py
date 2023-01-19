@@ -1,4 +1,5 @@
 import re
+import copy
 
 input = open("input\day11_input.txt", "r").read().split('\n\n')
 #input = open("input\day11_sample_input.txt", "r").read().split('\n\n')
@@ -38,42 +39,38 @@ mod = 1
 for i in tests:
     mod *= i
 
+
 # goes through one round, assigns inventory accordingly, and increments 
 # monkey_biz_counter for each item inspection
 def one_round(stress_type, inventories, monkey_biz_counter):
-    trues = []
-    falses = []
     if stress_type == 'high':
         stress_factor = mod
     else:
         stress_factor = 3
     for monkey in monkeys:
-        for old in inventories[monkey]:
+        for worry in inventories[monkey]:
             monkey_biz_counter[monkey] += 1
             if operations[monkey][1] == 'old':
-                new = eval(f"{old}{operations[monkey][0]}{old}")
+                worry = eval(f"{worry}{operations[monkey][0]}{worry}")
             else:
-                new = eval(f"{old}{operations[monkey][0]}{operations[monkey][1]}")
-            worry = new // stress_factor
+                worry = eval(f"{worry}{operations[monkey][0]}{operations[monkey][1]}")
+            if stress_type == 'high':
+                worry = worry % stress_factor
+            else:
+                worry = worry // stress_factor
             if worry % tests[monkey] == 0:
-                trues.append(worry)
+                inventories[recipient_if_true_list[monkey]].append(worry)
             else:
-                falses.append(worry)
+                inventories[recipient_if_false_list[monkey]].append(worry)
         inventories[monkey] = []
-        if trues != []:
-            inventories[recipient_if_true_list[monkey]].extend(trues)
-            trues = []
-        if falses != []:
-            inventories[recipient_if_false_list[monkey]].extend(falses)
-            falses = []
-
     return inventories, monkey_biz_counter
+
 
 # this calculates monkey business (product of two top inspection counts) for
 # a given number of rounds and stress_type
 def monkey_biz(rounds, stress_type):
     monkey_biz_counter = monkey_biz_counter_original.copy()
-    inventories = inventories_original.copy()
+    inventories = copy.deepcopy(inventories_original)
     for round in range(rounds):
         inventories, monkey_biz_counter = one_round(stress_type, inventories, monkey_biz_counter)
     first = max(monkey_biz_counter)
