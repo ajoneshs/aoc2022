@@ -3,7 +3,9 @@
 # moves each input file to the input folder, and updates each file to refer
 # to the new location for the input files
 
-import os, shutil, re
+import os
+import shutil
+import re
 
 os.chdir('C:\eng\\aoc2022')
 input_dir = 'C:\eng\\aoc2022\\input'
