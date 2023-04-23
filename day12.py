@@ -1,4 +1,9 @@
 """AOC Day 12 Solutions"""
+
+#
+# probably doesn't make sense to use a graph
+#
+
 import networkx as nx
 import matplotlib.pyplot as plt
 
